@@ -49,6 +49,15 @@ def main():
                data["todos"] = todos
                save_data(data)
                print(f"已完成: {todos[num - 1]['task']}")
+          elif action == "del":
+              num = int(sys.argv[3])
+              if 1 <= num <= len(todos):
+                  removed = todos.pop(num-1)
+                  data["todos"] = todos
+                  save_data(data)
+                  print(f"已删除: {removed['task']}")
+              else:
+                  print("待办编号无效")
           else:
               print("待办编号无效")
       else:
