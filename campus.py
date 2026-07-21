@@ -23,7 +23,11 @@ def main():
       cmd = sys.argv[1]
 
       if cmd == "search":
-          print("搜索功能开发中...")
+          action = sys.argv[2] if len(sys.argv) > 2 else ""
+          if action == "add":
+              key = sys.argv[3] if len(sys.argv) > 3 else ""
+              detail = " ".join(sys.argv[4:]) if len(sys.argv) > 4 else ""
+              
       elif cmd == "todo":
           action = sys.argv[2]
           data = load_data()
