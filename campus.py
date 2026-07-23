@@ -60,7 +60,7 @@ def main():
                 print("请输入搜索关键词，例如: python campus.py search 图书馆")
 
     elif cmd == "todo":
-        action = sys.argv[2]
+        action = sys.argv[2] if len(sys.argv)>2 else ""
         data = load_data()
         todos = data.get("todos", [])
         if action == "add":
