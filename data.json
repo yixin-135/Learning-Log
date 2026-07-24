@@ -3,6 +3,10 @@
     {
       "task": "写完软工作业",
       "done": false
+    },
+    {
+      "task": "复习Python",
+      "done": false
     }
   ],
   "info": {
