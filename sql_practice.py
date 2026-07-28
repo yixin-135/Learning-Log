@@ -53,4 +53,22 @@ print("\n=== 分数最高的一个人 ===")
 for row in cur.execute("SELECT name,score FROM students ORDER BY score DESC LIMIT 1"):
       print(row)
 
+# ===== 第 2 课：分组聚合 =====
+
+print("\n=== 每个年级人数 ===")
+for row in cur.execute("SELECT grade, COUNT(*) FROM students GROUP BY grade"):
+      print(row)
+
+print("\n=== 每个年级平均分 ===")
+for row in cur.execute("SELECT grade, AVG(score) FROM students GROUP BY grade"):
+      print(row)
+
+print("\n=== 每个年级最高最低分 ===")
+for row in cur.execute("SELECT grade, MAX(score), MIN(score) FROM students GROUP BY grade"):
+      print(row)
+
+print("\n=== 平均分 > 85 的年级 ===")
+for row in cur.execute("SELECT grade, AVG(score) FROM students GROUP BY grade HAVING AVG(score) > 85"):
+      print(row)
+
 conn.close()
