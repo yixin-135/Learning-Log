@@ -71,4 +71,51 @@ print("\n=== 平均分 > 85 的年级 ===")
 for row in cur.execute("SELECT grade, AVG(score) FROM students GROUP BY grade HAVING AVG(score) > 85"):
       print(row)
 
+ # ===== 第 3 课：JOIN 联表查询 =====
+
+  # 建第二张表 - 选课表
+cur.execute("""
+      CREATE TABLE IF NOT EXISTS courses (
+          id INTEGER PRIMARY KEY,
+          student_id INTEGER,
+          course_name TEXT
+      )
+  """)
+
+courses = [
+      (1, 1, "Python程序设计"),
+      (2, 1, "数据结构"),
+      (3, 2, "Python程序设计"),
+      (4, 3, "数据结构"),
+      (5, 3, "操作系统"),
+      (6, 4, "操作系统"),
+      (7, 5, "Python程序设计"),
+      (8, 5, "数据结构"),
+  ]
+cur.executemany("INSERT OR REPLACE INTO courses VALUES (?, ?, ?)", courses)
+conn.commit()
+
+  # 两张表的数据：
+  # students: id, name, score, grade
+  # courses:  id, student_id, course_name
+  # courses.student_id 对应 students.id
+
+  # JOIN: 把学生名字和他们选的课连在一起
+print("\n=== 每个学生选了哪些课（INNER JOIN）===")
+for row in cur.execute("""
+      SELECT students.name, courses.course_name
+      FROM students
+      JOIN courses ON students.id = courses.student_id
+  """):
+      print(row)
+
+  # LEFT JOIN: 包含没选课的学生
+print("\n=== 所有学生（包括没选课的）===")
+for row in cur.execute("""
+      SELECT students.name, courses.course_name
+      FROM students
+      LEFT JOIN courses ON students.id = courses.student_id
+  """):
+      print(row)
+
 conn.close()
