@@ -118,4 +118,13 @@ for row in cur.execute("""
   """):
       print(row)
 
+#查询 1：按分数排名（分数一样排同一名）
+print("\n=== 分数排名 ===")
+for row in cur.execute("SELECT name, score, RANK() OVER (ORDER BY score DESC) as ranking FROM students"):
+     print(row)
+#查询 2：给每行一个序号
+print("\n=== 行号 ===")
+for row in cur.execute("SELECT name, score, ROW_NUMBER() OVER (ORDER BY score DESC) as row_num FROM students"):
+     print(row)
+     
 conn.close()
