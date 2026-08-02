@@ -126,5 +126,19 @@ for row in cur.execute("SELECT name, score, RANK() OVER (ORDER BY score DESC) as
 print("\n=== 行号 ===")
 for row in cur.execute("SELECT name, score, ROW_NUMBER() OVER (ORDER BY score DESC) as row_num FROM students"):
      print(row)
-     
+
+#1：每门课有多少人选
+print("\n=== 每门课有多少人选 ===")
+for row in cur.execute("SELECT course_name, COUNT(*) FROM courses GROUP BY course_name"):
+      print(row)
+
+#2：选了 Python程序设计 的学生名字和分数
+print("\n=== 选了 Python程序设计 的学生名字和分数 ===")
+for row in cur.execute("""
+        SELECT students.name, students.score
+        FROM students
+        JOIN courses ON students.id = courses.student_id
+        WHERE courses.course_name = 'Python程序设计'
+    """):
+        print(row)
 conn.close()
