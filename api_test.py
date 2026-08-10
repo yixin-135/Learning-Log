@@ -65,10 +65,11 @@ prompt = f"""你是一个校园助手。请根据以下文档内容回答用户�
 
   回答："""
 
+import os
 client = OpenAI(
-    api_key="REDACTED",
+    api_key=os.environ.get("DEEPSEEK_API_KEY"),
     base_url="https://api.deepseek.com"
-  )
+)
 response = client.chat.completions.create(
     model="deepseek-chat",
     messages=[
